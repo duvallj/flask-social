@@ -9,8 +9,8 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from flask_security.datastore import SQLAlchemyDatastore, MongoEngineDatastore, \
-    PeeweeDatastore
+from flask_security.datastore import SQLAlchemyDatastore, \
+    MongoEngineDatastore, PeeweeDatastore
 
 
 class ConnectionDatastore(object):

@@ -10,12 +10,12 @@
 """
 from importlib import import_module
 
-from flask import (Blueprint, current_app, redirect, request, session,
-                   after_this_request, abort, url_for)
-from flask.ext.security import current_user, login_required
-from flask.ext.security.utils import (get_post_login_redirect, login_user,
-                                      logout_user, get_url, do_flash)
-from flask.ext.security.decorators import anonymous_user_required
+from flask import Blueprint, current_app, redirect, \
+    request, session, after_this_request, abort
+from flask_security import current_user, login_required
+from flask_security.utils import get_post_login_redirect, \
+    login_user, logout_user, get_url, do_flash
+from flask_security.decorators import anonymous_user_required
 from werkzeug.local import LocalProxy
 
 from .signals import (connection_removed, connection_created,
@@ -68,6 +68,7 @@ def reconnect(provider_id):
     """
     logout_user()
     return login(provider_id)
+
 
 @login_required
 def remove_all_connections(provider_id):
@@ -175,7 +176,7 @@ def login_handler(response, provider, query):
         after_this_request(_commit)
         token_pair = get_token_pair_from_oauth_response(provider, response)
         if (token_pair['access_token'] != connection.access_token or
-            token_pair['secret'] != connection.secret):
+                token_pair['secret'] != connection.secret):
             connection.access_token = token_pair['access_token']
             connection.secret = token_pair['secret']
             _datastore.put(connection)
